@@ -1,0 +1,20 @@
+{% extends 'dashboard/base.html' %}
+
+
+
+{% block title %}index{% endblock title %}
+
+{% block content %}
+
+<h3> {{username}} </h3><br> 
+<br>
+<ul>
+{% for x in user %}
+<li>{{x.name}}</li>
+<li><a href="{{ url_for('simulacro.update',id=x.id) }}">edit</a></li>
+<li><a href="{{ url_for('simulacro.delete',id=x.id) }}">delete</a></li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
+

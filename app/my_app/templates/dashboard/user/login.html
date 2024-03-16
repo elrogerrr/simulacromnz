@@ -1,0 +1,23 @@
+{% extends 'loginbase.html' %}
+
+{% block title %}login{% endblock title %}
+
+
+
+{% block content %}
+<br>
+<div class="container" >
+    <ul>
+        <form action="" method="post">
+            {{ form.csrf_token }}
+            <li>{{ form.username.label }}
+                {{ form.username }}</li>
+            <li>{{ form.password.label }}
+                {{ form.password }}</li>      
+            <button type="submit">Enviar</button>
+        </form>
+    </ul>
+    
+</div>
+
+{% endblock content %}
