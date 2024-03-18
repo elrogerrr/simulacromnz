@@ -1,9 +1,10 @@
 from flask import Blueprint, redirect, url_for, render_template, request,g,session
-from my_app.simulacro.models import Task
+from my_app.simulacro.models import Area,Historial
 from my_app.auth import models
-from my_app.simulacro import forms
+from my_app.simulacro import forms 
 from my_app.auth import controllers
 from my_app.simulacro import operations
+from my_app.auth import operations as operationsdb
 from flask_login import login_required, current_user
 
 simulacroRoute=Blueprint('simulacro',__name__,url_prefix='/simulacro')
@@ -18,8 +19,14 @@ def before():
 @simulacroRoute.route('/')
 # @login_required
 def index():
+    area=operations.getAll()
     username=controllers.current_user.username
-    return render_template('dashboard/index.html',username=username,user=operations.getAll())
+    user_id=controllers.current_user.id
+    b_id=Area.query.filter(Area.id.like(user_id)).all()
+    return render_template('dashboard/index.html',user_id=user_id,
+                                                b_id=b_id,
+                                                username=username,
+                                                area=area)
 
 @simulacroRoute.route('/<int:id>')
 def show(id:int):
@@ -40,7 +47,25 @@ def create():
 
 @simulacroRoute.route('/update/<int:id>', methods=('GET','POST') )
 def update(id:int):
-    return render_template('dashboard/evento/update.html')
+    
+    evento=operations.getById(id)
+    form=forms.Evento()
+    
+    if request.method=='GET':
+        form.p_actual.data=evento.p_actual
+        form.p_rezago.data=evento.p_rezago
+    if form.validate_on_submit():
+        operations.update(id,form.p_actual.data,form.p_rezago.data)
+    
+    return render_template('dashboard/evento/update.html',form=form)
+
+@simulacroRoute.route('/monitor')
+def monitor():
+    username=controllers.current_user.username
+    user=operationsdb.getAll()
+    print(user)
+    print(username)
+    return render_template('dashboard/monitor.html',username=username,user=user)
 
 
 

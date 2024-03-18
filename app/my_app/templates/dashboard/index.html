@@ -6,15 +6,45 @@
 
 {% block content %}
 
-<h3> {{username}} </h3><br> 
+<h3>Hola  "{{username}}" Actualizar datos. id {{user_id}} </h3><br> 
 <br>
-<ul>
-{% for x in user %}
-<li>{{x.name}}</li>
-<li><a href="{{ url_for('simulacro.update',id=x.id) }}">edit</a></li>
-<li><a href="{{ url_for('simulacro.delete',id=x.id) }}">delete</a></li>
-{% endfor %}
-</ul>
+<table class="table" >
+    <thead>
+        <th>
+            id
+        </th>
+        <th>
+            username
+        </th>
+        <th>
+            p_total
+        </th>
+        <th>
+            p_actual
+        </th>
+        <th>
+            p_rezago
+        </th>
+        <th>
+            created_at
+        </th>
+    </thead>
+
+    {% for x in b_id %}
+    <tbody>
+        <tr>
+            <td>{{x.id}}</td>
+            <td>{{x.area}}</td>
+            <td>{{x.p_total}}</td>
+            <td>{{x.p_actual}}</td>
+            <td>{{x.p_rezago}}</td>
+            <td>{{x.created_at}}</td>
+        <td><a href="{{ url_for('simulacro.update',id=x.id) }}">edit</a></td>
+        <td><a href="{{ url_for('simulacro.delete',id=x.id) }}">delete</a></td>
+        </tr>
+    </tbody>   
+    {% endfor %}
+</table>
 
 {% endblock content %}
 

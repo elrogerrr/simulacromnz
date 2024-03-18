@@ -31,10 +31,9 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('ya stas, porfagor logeate','sussess')  
-        if form.errors:
-            flash(form.errors,'danger')
-        else:
-            return redirect(url_for('auth.login'))
+        return redirect(url_for('auth.login'))
+    if form.errors:
+        flash(form.errors,'danger')
     return render_template('dashboard/user/register.html',form=form)
 
 @authRoute.route('/login',methods=['GET','POST'])
@@ -42,9 +41,7 @@ def login():
     if current_user.is_authenticated:
         flash('tu estas logieado en')
         return redirect(url_for('simulacro.index'))
-    
     form=LoginForm()
-    
     if form.validate_on_submit():
         username=form.username.data
         password=form.password.data
@@ -52,11 +49,9 @@ def login():
         if not(existing_user and existing_user.check_password(password)):
             flash('usuario o password incorrecto','warning')
             return render_template('dashboard/user/login.html',form=form)
-            
         login_user(existing_user) 
         flash('ya stas peinado pa tras','success')   
         return redirect(url_for('simulacro.index'))
-
     if form.errors:
         flash(form.errors,'danger')
     return render_template('dashboard/user/login.html',form=form)

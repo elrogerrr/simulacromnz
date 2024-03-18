@@ -1,0 +1,32 @@
+{% extends 'dashboard/base.html' %}
+
+
+
+{% block title %}Monitor{% endblock title %}
+
+{% block content %}
+
+<h3>Hola  "{{username}}"  que tengas una buena noche...</h3><br> 
+
+<table class="table" >
+    <thead>
+        <th>
+            id
+        </th>
+        <th>
+            username
+        </th>
+    </thead>
+
+    {% for x in user %}
+    <tbody>
+        <tr>
+            <td>{{x.id}}</td>
+            <td>{{x.username}}</td>
+        <td><a href="{{ url_for('simulacro.update',id=x.id) }}">edit</a></td>
+        <td><a href="{{ url_for('simulacro.delete',id=x.id) }}">delete</a></td>
+        </tr>
+    </tbody>   
+    {% endfor %}
+</table>
+{% endblock content %}

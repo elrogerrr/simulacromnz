@@ -2,16 +2,28 @@
 
 
 
-{% block title %}actualizar{% endblock title %}
+{% block title %}create_user{% endblock title %}
 
 {% block content %}
 <br>
 <div class="container" >
     <form action="" method="post">
-        <input type="text" name="Actualizar" id="">
+        {{ form.p_actual.label }}
+        {{ form.p_actual }}
+        {{ form.p_rezago.label }}
+        {{ form.p_rezago }}
+        {{ form.csrf_token }}
         <button type="submit">Enviar</button>
     </form>
 </div>
+
+{% if form.errors %}
+    <ul>
+        {% for error in form.errors %}
+            <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 <br>
 <h3>holamundo</h3>
